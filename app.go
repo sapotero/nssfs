@@ -9,6 +9,8 @@ import (
 	"flag"
 	"regexp"
 	"fmt"
+	"./utils"
+
 )
 
 var hash = make(map[string]string)
@@ -22,7 +24,6 @@ const (
 type SearchResult struct {
 	Name []string `json:"results,omitempty"`
 }
-
 
 func Index(ctx *fasthttp.RequestCtx) {
 	log.Printf("Welcome!\n")
@@ -63,6 +64,22 @@ func Search(ctx *fasthttp.RequestCtx) {
 
 }
 
+func Command(ctx *fasthttp.RequestCtx) {
+	packet := utils.Parse( ctx.Request.Body() )
+
+	switch packet.Command {
+	case "add":
+		log.Printf("add: %s, %s", packet.Command, packet.Params)
+
+		break
+	default:
+		log.Printf("Unknown command: %s | params: %s", packet.Command, packet.Params)
+
+	}
+
+}
+
+
 func main() {
 
 	flag.Bool("master", defaultMaster, "is master node")
@@ -72,6 +89,7 @@ func main() {
 
 	router := fasthttprouter.New()
 	router.GET("/", Index)
+	router.POST("/command", Command)
 	router.GET("/put/:name", Put)
 	router.GET("/search", Search)
 
@@ -79,6 +97,14 @@ func main() {
 }
 
 
+// Пакет для любой команды
+// {
+// 	command : "Add",
+// 	params  : [
+// 		{"k" : "v"},
+// 		{"k1" : "v1"}
+// 	]
+// }
 
 //----------
 func searchByKeys(hash map[string]string, pattern string, isRegularExpression bool) []string {

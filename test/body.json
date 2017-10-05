@@ -1,0 +1,17 @@
+{
+  "command" : "add",
+  "params" : [
+    {
+      "key"   : "key",
+      "value" : "value"
+    },
+    {
+      "key1"   : "key1",
+      "value1" : "value1"
+    },
+    {
+      "key2"   : "key2",
+      "value2" : "value2"
+    }
+  ]
+}
