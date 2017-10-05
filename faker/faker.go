@@ -20,7 +20,7 @@ type PacketParam struct {
 
 const (
 	COUNT = 10000
-	TIMES = 100
+	TIMES = 1
 	URL = "http://localhost:8080/command"
 )
 

@@ -29,7 +29,7 @@ func Search(ctx *fasthttp.RequestCtx) {
 
 	// Дикая проверка на то что прилетело
 	// http://localhost:8080/search?pattern=Jimmy&regular=true|false
-	
+
 	reg := fmt.Sprintf("%s", ctx.QueryArgs().Peek("regular"))
 	if len(reg) != 0 && reg == "true" {
 		isRegular = true

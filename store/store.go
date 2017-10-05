@@ -9,7 +9,11 @@ import (
 var hash = make(map[string]string)
 
 type SearchResult struct {
-	Results []string `json:"results,omitempty"`
+	Results []Result `json:"results,omitempty"`
+}
+type Result struct {
+	Key   string `json:"key"`
+	Value string `json:"value"`
 }
 
 func Add(name string, value string)  {
@@ -30,53 +34,18 @@ func SearchByKeys(pattern string, isRegularExpression bool) SearchResult {
 
 	result := SearchResult{};
 
-	for testString := range hash {
+	for k, v := range hash {
 
 		if isRegularExpression {
-			match := re.MatchString(testString)
+			match := re.MatchString(k)
 			if match {
-				//keys = append(keys, testString)
-				result.Results = append(result.Results, testString)
+				result.Results = append(result.Results, Result{Key:k, Value:v})
 			}
 		} else {
 			if strings.Contains(
-				strings.ToLower(testString),
+				strings.ToLower(k),
 				strings.ToLower(pattern))  {
-				//keys = append(keys, testString)
-				result.Results = append(result.Results, testString)
-			}
-		}
-
-
-	}
-
-	return result
-}
-
-func SearchByValues(pattern string, isRegularExpression bool) SearchResult {
-	log.Printf("Hash size : %d | pattern: %s | re: %t", len(hash), pattern, isRegularExpression)
-	re := regexp.MustCompile(pattern)
-
-	if len(pattern) == 0 {
-		log.Panic("error!")
-	}
-
-	result := SearchResult{};
-
-	for _, testString := range hash {
-
-		if isRegularExpression {
-			match := re.MatchString(testString)
-			if match {
-				//keys = append(keys, testString)
-				result.Results = append(result.Results, testString)
-			}
-		} else {
-			if strings.Contains(
-				strings.ToLower(testString),
-				strings.ToLower(pattern))  {
-				//keys = append(keys, testString)
-				result.Results = append(result.Results, testString)
+				result.Results = append(result.Results, Result{Key:k, Value:v})
 			}
 		}
 
