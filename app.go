@@ -44,23 +44,7 @@ func Search(ctx *fasthttp.RequestCtx) {
 }
 
 func Command(ctx *fasthttp.RequestCtx) {
-	packet := utils.Parse( ctx.Request.Body() )
-
-	switch packet.Command {
-	case "add":
-		log.Printf("%s:  %d", packet.Command, len(packet.Params))
-
-		if len(packet.Params) > 0 {
-			for _, entity := range packet.Params{
-				store.Add(entity.Key, entity.Value)
-			}
-		}
-		break
-	default:
-		log.Printf("Unknown command: %s | params: %s", packet.Command, len(packet.Params))
-
-	}
-
+	utils.Execute( ctx.Request.Body() )
 }
 
 

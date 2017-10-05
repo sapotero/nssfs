@@ -20,10 +20,6 @@ func Add(name string, value string)  {
 	hash[name] = value;
 }
 
-func GetStore() map[string]string {
-	return hash;
-}
-
 func SearchByKeys(pattern string, isRegularExpression bool) SearchResult {
 	log.Printf("Hash size : %d | pattern: %s | re: %t", len(hash), pattern, isRegularExpression)
 	re := regexp.MustCompile(pattern)
