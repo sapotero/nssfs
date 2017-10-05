@@ -27,6 +27,9 @@ func GetMaster() Stage  {
 
 func (node Stage) Serve()  {
 
+	// https://justinas.org/writing-http-middleware-in-go/
+	// запилить каждому свой стор
+
 	router := fasthttprouter.New()
 	router.POST("/command", Command)
 	router.GET("/search", Search)
